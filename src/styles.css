@@ -151,3 +151,25 @@
     color: var(--color-foreground);
   }
 }
+
+:root {
+  --brand: oklch(0.42 0.11 152);
+  --brand-dark: oklch(0.35 0.1 152);
+  --mint: oklch(0.94 0.06 152);
+  --cta: oklch(0.63 0.2 42);
+  --cta-hover: oklch(0.55 0.18 42);
+  --surface: oklch(0.98 0.004 250);
+}
+
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 10px 25px -8px oklch(0.63 0.2 42 / 0.55); }
+  50% { box-shadow: 0 14px 40px -6px oklch(0.63 0.2 42 / 0.85); }
+}
+
+@utility cta-pulse {
+  animation: cta-pulse 2.2s ease-in-out infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
