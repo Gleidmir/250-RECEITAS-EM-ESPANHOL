@@ -215,10 +215,23 @@ function Faq() {
 function Index() {
   return (
     <div className="font-sans text-foreground">
-      {/* Barra de urgencia */}
-      <div className="sticky top-0 z-50 bg-brand-dark px-3 py-2 text-center text-[11px] font-semibold leading-tight text-white sm:text-sm">
-        🚨 OFERTA ESPECIAL PARA AMÉRICA LATINA: 78% DE DESCUENTO SOLO POR HOY | ACCESO INMEDIATO Y
-        DE POR VIDA
+      {/* Letrero electrónico */}
+      <div className="sticky top-0 z-50 overflow-hidden bg-brand-dark py-2 text-[11px] font-semibold text-white sm:text-sm">
+        <div className="marquee-track whitespace-nowrap">
+          {[0, 1].map((k) => (
+            <span key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
+              {[
+                "✅ Estás en la página oficial de las 250 Recetas para Diabéticos",
+                "🚨 Oferta especial para América Latina: 78% de descuento solo por hoy",
+                "⚡ Acceso inmediato y de por vida",
+              ].map((t) => (
+                <span key={t} className="px-6">
+                  {t}
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Hero */}
