@@ -13,8 +13,8 @@ import {
   BadgeCheck,
   Gift,
 } from "lucide-react";
-import bundleMockup from "@/assets/bundle-mockup.png";
-import bonusCover from "@/assets/bonus-cover.png";
+import mainCoverAsset from "@/assets/capa-250-recetas.png.asset.json";
+import bonusCoverAsset from "@/assets/capa-superando-diabetes.png.asset.json";
 
 const CHECKOUT_URL = "https://pay.hotmart.com/[HOTMART_CODE]?checkoutMode=10";
 
@@ -273,14 +273,31 @@ function Index() {
             </div>
           </div>
 
-          <div className="relative">
-            <img
-              src={bundleMockup}
-              alt="Mockup de los e-books 250 Recetas para Diabéticos y Superando la Diabetes"
-              width={1200}
-              height={912}
-              className="mx-auto w-full max-w-xl"
-            />
+          <div className="relative mx-auto w-full max-w-xl">
+            <div className="book-stage relative mx-auto min-h-[390px] w-full max-w-[470px] sm:min-h-[540px]" aria-label="Pack digital con los dos e-books incluidos">
+              <div className="book-glow absolute inset-x-[8%] bottom-[4%] h-[23%] rounded-full" aria-hidden="true" />
+              <img
+                src={bonusCoverAsset.url}
+                alt="Portada del e-book bonus Superando la Diabetes"
+                width={768}
+                height={1089}
+                className="bonus-book absolute right-[3%] top-[12%] z-10 w-[48%] rounded-md shadow-2xl sm:right-0 sm:w-[46%]"
+              />
+              <img
+                src={mainCoverAsset.url}
+                alt="Portada oficial del e-book 250 Recetas para Diabéticos"
+                width={768}
+                height={1088}
+                fetchPriority="high"
+                className="main-book absolute left-[5%] top-[2%] z-20 w-[60%] rounded-md shadow-2xl sm:left-[3%] sm:w-[62%]"
+              />
+              <div className="bonus-seal absolute bottom-[7%] right-[1%] z-30 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-cta px-2 text-center font-display text-[11px] font-black uppercase leading-tight text-white shadow-xl sm:h-28 sm:w-28 sm:text-xs">
+                Bonus<br />gratis<br /><span className="text-[10px] font-semibold">Valor $19</span>
+              </div>
+            </div>
+            <p className="mt-1 text-center text-sm font-bold text-brand-dark">
+              Pack digital completo: recetario principal + guía bonus
+            </p>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {["Desayunos", "Platos Fuertes", "Postres Sin Azúcar"].map((t) => (
                 <span
@@ -364,12 +381,12 @@ function Index() {
       <section className="bg-brand-dark px-4 py-16 text-white">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2">
           <img
-            src={bonusCover}
-            alt="E-book bonus Superando la Diabetes"
+            src={bonusCoverAsset.url}
+            alt="Portada oficial del e-book bonus Superando la Diabetes"
             loading="lazy"
-            width={928}
-            height={1152}
-            className="mx-auto w-56 drop-shadow-2xl sm:w-72"
+            width={768}
+            height={1089}
+            className="bonus-section-book mx-auto w-56 rounded-md drop-shadow-2xl sm:w-72"
           />
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-cta px-4 py-1.5 text-xs font-bold uppercase sm:text-sm">
