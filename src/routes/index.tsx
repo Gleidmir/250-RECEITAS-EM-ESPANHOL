@@ -35,6 +35,43 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "/" },
+      { property: "og:locale", content: "es_ES" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: "250 Recetas para Diabéticos + Bonus Superando la Diabetes",
+          description:
+            "Recetario digital con 250 recetas económicas de bajo índice glucémico, más el e-book bonus Superando la Diabetes. Descarga inmediata en PDF.",
+          brand: { "@type": "Brand", name: "250 Recetas para Diabéticos" },
+          category: "Libros digitales de salud y nutrición",
+          offers: {
+            "@type": "Offer",
+            price: "7.90",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: "/",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
     ],
   }),
   component: Index,
