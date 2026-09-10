@@ -170,6 +170,28 @@
   animation: cta-pulse 2.2s ease-in-out infinite;
 }
 
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility marquee-track {
+  display: inline-flex;
+  min-width: 200%;
+  animation: marquee-scroll 22s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .cta-pulse { animation: none; }
+}
+
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
 }
