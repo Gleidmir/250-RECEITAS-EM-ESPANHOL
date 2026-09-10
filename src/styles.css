@@ -159,6 +159,7 @@
   --cta: oklch(0.63 0.2 42);
   --cta-hover: oklch(0.55 0.18 42);
   --surface: oklch(0.98 0.004 250);
+  --book-glow: oklch(0.42 0.11 152 / 0.22);
 }
 
 @keyframes cta-pulse {
@@ -182,9 +183,71 @@
   will-change: transform;
 }
 
+@keyframes main-book-float {
+  0%, 100% { transform: perspective(1000px) rotateY(7deg) translateY(0); }
+  50% { transform: perspective(1000px) rotateY(3deg) translateY(-10px); }
+}
+
+@keyframes bonus-book-reveal {
+  0%, 12% {
+    transform: perspective(1000px) translateX(-34%) scale(0.84) rotateY(-9deg);
+    opacity: 0.72;
+  }
+  42%, 72% {
+    transform: perspective(1000px) translateX(5%) scale(1) rotateY(-2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1000px) translateX(-12%) scale(0.91) rotateY(-6deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes bonus-seal-pop {
+  0%, 28% { transform: scale(0.82) rotate(-8deg); opacity: 0; }
+  42%, 100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+}
+
+@keyframes bonus-section-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-9px) rotate(1deg); }
+}
+
+.book-stage {
+  perspective: 1000px;
+  isolation: isolate;
+}
+
+.book-glow {
+  background: var(--book-glow);
+  filter: blur(32px);
+}
+
+.main-book {
+  animation: main-book-float 5.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.bonus-book {
+  animation: bonus-book-reveal 6.5s ease-in-out infinite alternate;
+  transform-origin: bottom left;
+}
+
+.bonus-seal {
+  animation: bonus-seal-pop 6.5s ease-in-out infinite alternate;
+}
+
+.bonus-section-book {
+  animation: bonus-section-float 5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
   .cta-pulse { animation: none; }
+  .main-book,
+  .bonus-book,
+  .bonus-seal,
+  .bonus-section-book { animation: none; }
 }
 
 html {
