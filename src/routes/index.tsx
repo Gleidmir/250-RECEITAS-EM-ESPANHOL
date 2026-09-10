@@ -187,7 +187,7 @@ function Index() {
       {/* Hero */}
       <header className="bg-white px-4 pb-14 pt-8">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
-          <div>
+          <div className="text-center">
             <span className="inline-block rounded-full bg-mint px-4 py-1.5 text-xs font-semibold text-brand-dark sm:text-sm">
               ⭐ Aprobado para Diabéticos y Prediabéticos | Ingredientes 100% Accesibles
             </span>
@@ -201,20 +201,20 @@ function Index() {
               amas.
             </h2>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mx-auto mt-6 max-w-xl space-y-3">
               {[
                 "250 opciones prácticas: desde desayunos con energía hasta postres cremosos sin azúcar refinada.",
                 "Ingredientes comunes del supermercado local (nada de ingredientes costosos o raros).",
                 "Diseñado para mantener tu glucosa estable y proteger tus arterias, nervios y riñones.",
               ].map((b) => (
-                <li key={b} className="flex gap-3 text-sm text-muted-foreground sm:text-base">
+                <li key={b} className="flex justify-center gap-3 text-sm text-muted-foreground sm:text-base">
                   <Check className="mt-0.5 shrink-0 text-brand" size={20} />
                   <span>{b}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 max-w-md">
+            <div className="mx-auto mt-8 max-w-md">
               <CtaButton>¡Sí, quiero las 250 recetas por solo $7.90!</CtaButton>
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 🔒 Pago seguro vía Hotmart • Descarga inmediata en PDF a tu celular o tablet •
