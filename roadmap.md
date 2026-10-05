@@ -4,3 +4,4 @@
 - [ ] Criar oito slides claramente ilustrativos, sem atribuir avaliações falsas a pessoas reais.
 - [ ] Criar selo 7, destacar respostas e aplicar botões verdes discretamente animados.
 - [ ] Conferir a página e aplicar atualização obrigatória.
+- [ ] Corrigir retratos repetidos mantendo homem/nome masculino e mulher/nome feminino, sem apresentar relatos inventados como reais.
