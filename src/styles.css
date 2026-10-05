@@ -27,6 +27,11 @@
   --color-cta: var(--cta);
   --color-cta-hover: var(--cta-hover);
   --color-surface: var(--surface);
+  --color-sales: var(--sales);
+  --color-sales-hover: var(--sales-hover);
+  --color-sales-foreground: var(--sales-foreground);
+  --color-empathy: var(--empathy);
+  --color-empathy-foreground: var(--empathy-foreground);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -160,7 +165,44 @@
   --cta-hover: oklch(0.55 0.18 42);
   --surface: oklch(0.98 0.004 250);
   --book-glow: oklch(0.42 0.11 152 / 0.22);
+  --sales: oklch(0.86 0.23 135);
+  --sales-hover: oklch(0.8 0.23 135);
+  --sales-foreground: oklch(0.2 0.05 152);
+  --sales-shadow: oklch(0.76 0.2 135 / 0.3);
+  --empathy: oklch(0.87 0.12 152);
+  --empathy-foreground: oklch(0.12 0 0);
 }
+
+@keyframes sales-pulse {
+  0%, 100% { box-shadow: 0 4px 12px -4px var(--sales-shadow); }
+  50% { box-shadow: 0 6px 24px 2px var(--sales-shadow); }
+}
+
+.sales-pulse { animation: sales-pulse 3.8s ease-in-out infinite; }
+
+.guarantee-seal {
+  outline: 2px dashed var(--brand);
+  outline-offset: 5px;
+}
+
+.reader-portrait {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid var(--mint);
+}
+.reader-portrait img { position: absolute; width: 400%; height: auto; max-width: none; }
+.reader-portrait-0 img { left: 0; top: 0; }
+.reader-portrait-1 img { left: -100%; top: 0; }
+.reader-portrait-2 img { left: -200%; top: 0; }
+.reader-portrait-3 img { left: -300%; top: 0; }
+.reader-portrait-4 img { left: 0; top: -133.333%; }
+.reader-portrait-5 img { left: -100%; top: -133.333%; }
+.reader-portrait-6 img { left: -200%; top: -133.333%; }
+.reader-portrait-7 img { left: -300%; top: -133.333%; }
 
 @keyframes cta-pulse {
   0%, 100% { box-shadow: 0 10px 25px -8px oklch(0.63 0.2 42 / 0.55); }
@@ -190,16 +232,19 @@
 
 @keyframes bonus-book-reveal {
   0%, 12% {
-    transform: perspective(1000px) translateX(-34%) scale(0.84) rotateY(-9deg);
-    opacity: 0.72;
+    transform: perspective(1000px) translateX(-34%) scale(0.86) rotateY(-9deg);
+    opacity: 1;
+    z-index: 10;
   }
   42%, 72% {
-    transform: perspective(1000px) translateX(5%) scale(1) rotateY(-2deg);
+    transform: perspective(1000px) translateX(0) translateY(-8px) scale(1.04) rotateY(-2deg);
     opacity: 1;
+    z-index: 25;
   }
   100% {
-    transform: perspective(1000px) translateX(-12%) scale(0.91) rotateY(-6deg);
-    opacity: 0.9;
+    transform: perspective(1000px) translateX(0) scale(1) rotateY(-3deg);
+    opacity: 1;
+    z-index: 25;
   }
 }
 
@@ -235,6 +280,7 @@
 
 .bonus-seal {
   animation: bonus-seal-pop 6.5s ease-in-out infinite alternate;
+  z-index: 30;
 }
 
 .bonus-section-book {
@@ -244,10 +290,12 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
   .cta-pulse { animation: none; }
+  .sales-pulse { animation: none; }
   .main-book,
   .bonus-book,
   .bonus-seal,
   .bonus-section-book { animation: none; }
+  .bonus-book { z-index: 25; }
 }
 
 html {

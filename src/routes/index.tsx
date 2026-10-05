@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ReaderCarousel } from "@/components/reader-carousel";
 import {
-  ShieldCheck,
   Lock,
   Download,
-  Star,
   Check,
   HeartPulse,
   Frown,
@@ -87,12 +87,9 @@ function CtaButton({
   href?: string;
 }) {
   return (
-    <a
-      href={href}
-      className={`cta-pulse inline-flex w-full items-center justify-center rounded-xl bg-cta px-6 py-4 text-center text-base font-extrabold uppercase tracking-wide text-white transition-colors hover:bg-cta-hover sm:text-lg ${className}`}
-    >
-      {children}
-    </a>
+    <Button asChild variant="sales" className={`sales-pulse h-auto min-h-14 w-full rounded-xl px-6 py-4 text-center text-base uppercase sm:text-lg ${className}`}>
+      <a href={href}>{children}</a>
+    </Button>
   );
 }
 
@@ -141,21 +138,6 @@ const categories = [
   },
 ];
 
-const testimonials = [
-  {
-    text: "Por fin puedo desayunar y cenar rico sin que la glucosa se me dispare. El mousse de chocolate con aguacate es increíble.",
-    name: "Carlos M., 58 años (México)",
-  },
-  {
-    text: "Compré el recetario para cocinarle a mi madre diagnosticada con diabetes tipo 2. Ahora comemos todos lo mismo en la mesa y sus exámenes mejoraron muchísimo.",
-    name: "Elena R., 34 años (Colombia)",
-  },
-  {
-    text: "Lo mejor es que los ingredientes se compran en cualquier verdulería de la esquina. Fácil, rápido y directo al grano.",
-    name: "Jorge L., 46 años (Chile)",
-  },
-];
-
 const faqs = [
   {
     q: "¿Cómo recibo el material tras la compra?",
@@ -175,26 +157,17 @@ const faqs = [
   },
 ];
 
-function Stars() {
-  return (
-    <div className="flex gap-0.5 text-amber-500">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
-      ))}
-    </div>
-  );
-}
-
 function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <div className="mx-auto max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white">
       {faqs.map((f, i) => (
         <div key={f.q}>
-          <button
+          <Button
+            variant="ghost"
             type="button"
             onClick={() => setOpen(open === i ? null : i)}
-            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+            className="flex h-auto w-full items-center justify-between gap-4 whitespace-normal rounded-none px-5 py-4 text-left"
             aria-expanded={open === i}
           >
             <span className="font-display text-base font-semibold text-foreground">{f.q}</span>
@@ -202,9 +175,9 @@ function Faq() {
               size={20}
               className={`shrink-0 text-brand transition-transform ${open === i ? "rotate-180" : ""}`}
             />
-          </button>
+          </Button>
           {open === i && (
-            <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+            <p className="px-5 pb-5 text-sm font-bold leading-relaxed text-brand-dark">{f.a}</p>
           )}
         </div>
       ))}
@@ -245,7 +218,7 @@ function Index() {
               Vuelve a Disfrutar de la Comida Sabrosa Sin Miedo a los Picos de Glucosa ni a las
               Restricciones Extremas
             </h1>
-            <h2 className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <h2 className="mt-4 text-base font-bold leading-relaxed text-brand-dark sm:text-lg">
               El recetario definitivo con 250 preparaciones económicas, deliciosas y de bajo índice
               glucémico para transformar tus comidas de todos los días — para ti o para quien más
               amas.
@@ -281,7 +254,7 @@ function Index() {
                 alt="Portada del e-book bonus Superando la Diabetes"
                 width={768}
                 height={1089}
-                className="bonus-book absolute right-[3%] top-[12%] z-10 w-[48%] rounded-md shadow-2xl sm:right-0 sm:w-[46%]"
+                className="bonus-book absolute right-[3%] top-[10%] w-[52%] rounded-md shadow-2xl"
               />
               <img
                 src={mainCoverAsset.url}
@@ -291,8 +264,8 @@ function Index() {
                 fetchPriority="high"
                 className="main-book absolute left-[5%] top-[2%] z-20 w-[60%] rounded-md shadow-2xl sm:left-[3%] sm:w-[62%]"
               />
-              <div className="bonus-seal absolute bottom-[7%] right-[1%] z-30 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-cta px-2 text-center font-display text-[11px] font-black uppercase leading-tight text-white shadow-xl sm:h-28 sm:w-28 sm:text-xs">
-                Bonus<br />gratis<br /><span className="text-[10px] font-semibold">Valor $19</span>
+              <div className="bonus-seal absolute bottom-[7%] right-[1%] z-30 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-cta px-2 text-center font-display text-base font-black uppercase leading-tight text-white shadow-xl sm:h-28 sm:w-28 sm:text-lg">
+                Gratis
               </div>
             </div>
             <p className="mt-1 text-center text-sm font-bold text-brand-dark">
@@ -339,11 +312,11 @@ function Index() {
               <div key={c.title} className="rounded-2xl border border-border bg-white p-6">
                 <c.icon className="text-brand" size={32} />
                 <h3 className="mt-4 font-display text-lg font-bold">{c.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-dark">{c.text}</p>
               </div>
             ))}
           </div>
-          <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-mint p-6 text-center font-display text-base font-semibold text-brand-dark sm:text-lg">
+          <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-empathy p-6 text-center font-display text-base font-bold text-empathy-foreground sm:text-lg">
             Tener diabetes no significa renunciar al placer de sentarse a la mesa. Solo necesitas el
             mapa de combinaciones e ingredientes de bajo impacto glucémico.
           </p>
@@ -367,7 +340,18 @@ function Index() {
                 <span className="mt-2 inline-block rounded-full bg-mint px-3 py-1 text-xs font-bold text-brand-dark">
                   {c.count}
                 </span>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.text}</p>
+                <p className="mt-3 text-sm font-semibold leading-relaxed text-brand-dark">{c.text}</p>
+              </div>
+            ))}
+            {[
+              { icon: HeartPulse, title: "Hábitos para Cuidar tu Diabetes", text: "Planifica tus comidas y registra tus dudas para revisarlas con tu médico o nutricionista." },
+              { icon: Users, title: "Bienestar para Toda la Familia", text: "Combina una alimentación variada con movimiento, descanso y el seguimiento de tu profesional de salud." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-brand/30 bg-mint p-6">
+                <item.icon size={30} className="text-brand-dark" />
+                <h3 className="mt-3 font-display text-lg font-bold">{item.title}</h3>
+                <span className="mt-2 inline-block text-xs font-bold uppercase text-brand-dark">Cuidado diario</span>
+                <p className="mt-3 text-sm font-semibold leading-relaxed text-brand-dark">{item.text}</p>
               </div>
             ))}
           </div>
@@ -412,27 +396,7 @@ function Index() {
         </div>
       </section>
 
-      {/* Testimonios */}
-      <section className="bg-surface px-4 py-16">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-center font-display text-2xl font-extrabold sm:text-3xl">
-            Lo que Dicen Quienes Ya Cocinan con el Recetario
-          </h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <figure key={t.name} className="rounded-2xl border border-border bg-white p-6">
-                <Stars />
-                <blockquote className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  “{t.text}”
-                </blockquote>
-                <figcaption className="mt-4 text-sm font-semibold text-brand-dark">
-                  {t.name}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ReaderCarousel />
 
       {/* Precio */}
       <section id="comprar" className="scroll-mt-16 bg-white px-4 py-16">
@@ -492,14 +456,16 @@ function Index() {
       {/* Garantía */}
       <section className="bg-surface px-4 py-16">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-3xl border border-border bg-white p-8 text-center sm:flex-row sm:text-left">
-          <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full bg-mint text-brand-dark">
-            <ShieldCheck size={44} />
+          <div className="guarantee-seal grid h-28 w-28 shrink-0 place-content-center rounded-full border-4 border-brand bg-mint text-center text-brand-dark" aria-label="Garantía de 7 días">
+            <span className="text-[10px] font-extrabold uppercase">Garantía</span>
+            <span className="font-display text-5xl font-black leading-none">7</span>
+            <span className="text-xs font-extrabold uppercase">Días</span>
           </div>
           <div>
             <h2 className="font-display text-xl font-extrabold sm:text-2xl">
               Garantía Incondicional de 7 Días
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-dark">
               Prueba las recetas durante 7 días completos. Si sientes que no son fáciles, sabrosas y
               amigables con tu glucemia, pides el 100% de tu dinero de vuelta directamente en
               Hotmart. Sin preguntas ni trámites.
@@ -532,12 +498,9 @@ function Index() {
           <p className="truncate text-xs font-semibold text-foreground">250 Recetas + Bonus</p>
           <p className="text-sm font-black text-brand">$7.90 USD</p>
         </div>
-        <a
-          href="#comprar"
-          className="shrink-0 rounded-xl bg-cta px-5 py-3 text-sm font-extrabold uppercase text-white transition-colors hover:bg-cta-hover"
-        >
-          Obtener Ahora
-        </a>
+        <Button asChild variant="sales" className="sales-pulse h-auto shrink-0 rounded-xl px-5 py-3 text-sm uppercase">
+          <a href="#comprar">Obtener Ahora</a>
+        </Button>
       </div>
     </div>
   );
