@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep purchase-button styling in the shared Button sales variant with semantic CSS tokens, so bonus-section colors remain independent.
+- Keep illustrative reader stories in a dedicated Embla carousel with explicit fictional-content labels, pause controls and reduced-motion support.
