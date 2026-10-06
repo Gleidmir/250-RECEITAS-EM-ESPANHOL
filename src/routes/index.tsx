@@ -181,7 +181,7 @@ const faqs = [
 ];
 
 function Faq() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   return (
     <div className="mx-auto max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-md">
       {faqs.map((f, i) => (
@@ -281,6 +281,12 @@ function Index() {
                   height={1089}
                   className="w-full h-auto rounded-lg"
                 />
+                <div className="bonus-seal absolute -bottom-4 -right-3 z-40 grid h-20 w-20 place-items-center rounded-full border-4 border-white bg-emerald-500 p-1 text-center font-display uppercase leading-tight text-white shadow-xl shadow-emerald-500/40 sm:-bottom-5 sm:-right-4 sm:h-24 sm:w-24">
+                  <div className="flex flex-col items-center justify-center">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-100 sm:text-xs">BONUS</span>
+                    <span className="text-xs font-black uppercase tracking-wide text-white sm:text-sm">GRATIS</span>
+                  </div>
+                </div>
               </div>
               <div className="main-book absolute left-[0%] top-[2%] z-30 w-[51%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[51%]">
                 <img
@@ -292,12 +298,6 @@ function Index() {
                   fetchPriority="high"
                   className="w-full h-auto rounded-lg"
                 />
-              </div>
-              <div className="bonus-seal absolute -bottom-3 right-[1%] z-40 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-emerald-500 p-1 text-center font-display uppercase leading-tight text-white shadow-xl shadow-emerald-500/40 sm:-bottom-4 sm:right-[2%] sm:h-28 sm:w-28">
-                <div className="flex flex-col items-center justify-center">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-100 sm:text-xs">BONUS</span>
-                  <span className="text-sm font-black uppercase tracking-wide text-white sm:text-base">GRATIS</span>
-                </div>
               </div>
             </div>
             <p className="mt-1 text-center text-sm font-bold text-brand-dark">
@@ -438,14 +438,14 @@ function Index() {
               Bonus Exclusivo Incluido
             </span>
           </div>
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-cta px-4 py-2 text-xs font-black uppercase tracking-wide text-white shadow-md sm:text-sm">
+          <div className="text-center">
+            <span className="inline-flex items-center justify-center gap-2 rounded-full bg-cta px-4 py-2 text-xs font-black uppercase tracking-wide text-white shadow-md sm:text-sm">
               <Gift size={18} /> Regalo Exclusivo Hoy (Valor: $19.00 USD — GRATIS HOY)
             </span>
-            <h2 className="mt-5 font-display text-2xl font-black text-white sm:text-3xl leading-tight">
+            <h2 className="mt-5 text-center font-display text-2xl font-black text-white sm:text-3xl leading-tight">
               E-book Superando la Diabetes: Guía de Acción Rápida
             </h2>
-            <p className="mt-3 text-sm font-medium text-mint sm:text-base">
+            <p className="mt-3 text-center text-sm font-medium text-mint sm:text-base">
               El complemento perfecto para maximizar tu salud y complementar el recetario principal.
             </p>
             <ul className="mt-6 space-y-3.5">
@@ -562,25 +562,31 @@ function Index() {
         </div>
       </section>
 
-      <footer className="bg-surface px-4 py-8 text-center text-xs text-muted-foreground">
+      <footer className="bg-surface px-4 py-8 pb-14 text-center text-xs text-muted-foreground">
         <p>
           Este material es informativo y no sustituye la orientación de tu médico o nutricionista.
         </p>
         <p className="mt-2 font-bold">© {new Date().getFullYear()} 250 Recetas para Diabéticos.</p>
       </footer>
 
-      {/* Barra móvil */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between gap-3 border-t border-border bg-white/95 px-4 py-3 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.12)] md:hidden">
-        <div className="min-w-0">
-          <p className="truncate text-xs font-bold text-foreground">250 Recetas + Bonus</p>
-          <p className="text-base font-black text-brand">$5.90 USD</p>
+      {/* Letrero electrónico inferior fijo en español */}
+      <div className="fixed inset-x-0 bottom-0 z-50 overflow-hidden bg-brand-dark py-2.5 text-[11px] font-bold text-white shadow-[0_-4px_20px_rgba(0,0,0,0.25)] sm:text-xs">
+        <div className="marquee-track whitespace-nowrap">
+          {[0, 1].map((k) => (
+            <span key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
+              {[
+                "✅ Página Oficial de las 250 Recetas para Diabéticos",
+                "🚨 Oferta especial para América Latina: 78% de descuento solo por hoy",
+                "⚡ Acceso inmediato y de por vida en PDF",
+                "🔒 Garantía incondicional de 7 días",
+              ].map((t) => (
+                <span key={t} className="px-6 font-bold">
+                  {t}
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
-        <Button asChild variant="sales" className="sales-pulse h-auto shrink-0 rounded-xl px-5 py-3.5 text-xs font-black uppercase">
-          <a href={CHECKOUT_URL} className="flex items-center gap-1.5">
-            <span>Obtener Ahora</span>
-            <ArrowRight size={16} className="stroke-[3]" />
-          </a>
-        </Button>
       </div>
     </div>
   );
