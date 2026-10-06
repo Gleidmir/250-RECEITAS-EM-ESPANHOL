@@ -12,22 +12,29 @@ import {
   ChevronDown,
   BadgeCheck,
   Gift,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
 } from "lucide-react";
 import mainCoverAsset from "@/assets/capa-250-recetas.png.asset.json";
 import bonusCoverAsset from "@/assets/capa-superando-diabetes.png.asset.json";
 
-const CHECKOUT_URL = "https://pay.hotmart.com/[HOTMART_CODE]?checkoutMode=10";
+// Portadas restauradas de los e-books (principal y bonus)
+const MAIN_EBOOK_COVER = "https://i.postimg.cc/dtpcWGvL/CAPA-ESPANHOL.png";
+const BONUS_EBOOK_COVER = "https://i.postimg.cc/jjT99X1S/Gemini-Generated-Image-h6eafvh6eafvh6ea.png";
+
+const CHECKOUT_URL = "https://pay.hotmart.com/R107911179I?checkoutMode=10";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "250 Recetas para Diabéticos | Solo $7.90 USD Hoy" },
+      { title: "250 Recetas para Diabéticos | Solo $5.90 USD Hoy" },
       {
         name: "description",
         content:
-          "250 recetas económicas y de bajo índice glucémico + bonus Superando la Diabetes. Acceso inmediato en PDF por solo $7.90 USD.",
+          "250 recetas económicas y de bajo índice glucémico + bonus Superando la Diabetes. Acceso inmediato en PDF por solo $5.90 USD.",
       },
-      { property: "og:title", content: "250 Recetas para Diabéticos | Solo $7.90 USD Hoy" },
+      { property: "og:title", content: "250 Recetas para Diabéticos | Solo $5.90 USD Hoy" },
       {
         property: "og:description",
         content:
@@ -53,7 +60,7 @@ export const Route = createFileRoute("/")({
           category: "Libros digitales de salud y nutrición",
           offers: {
             "@type": "Offer",
-            price: "7.90",
+            price: "5.90",
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
             url: "/",
@@ -79,16 +86,32 @@ export const Route = createFileRoute("/")({
 
 function CtaButton({
   children,
+  subtitle = "ACCESO INMEDIATO EN PDF",
   className = "",
-  href = "#comprar",
+  href = CHECKOUT_URL,
 }: {
   children: React.ReactNode;
+  subtitle?: string;
   className?: string;
   href?: string;
 }) {
   return (
-    <Button asChild variant="sales" className={`sales-pulse h-auto min-h-14 w-full rounded-xl px-6 py-4 text-center text-base uppercase sm:text-lg ${className}`}>
-      <a href={href}>{children}</a>
+    <Button
+      asChild
+      variant="sales"
+      className={`sales-pulse h-auto min-h-16 w-full flex-col rounded-2xl px-6 py-4 text-center ${className}`}
+    >
+      <a href={href} className="flex flex-col items-center justify-center gap-0.5">
+        <span className="flex items-center justify-center gap-2 text-base font-black uppercase tracking-wide sm:text-xl">
+          <span>{children}</span>
+          <ArrowRight className="shrink-0 stroke-[3]" size={22} />
+        </span>
+        {subtitle && (
+          <span className="text-xs font-extrabold uppercase tracking-wider text-sales-foreground/80 sm:text-xs">
+            ({subtitle})
+          </span>
+        )}
+      </a>
     </Button>
   );
 }
@@ -160,24 +183,26 @@ const faqs = [
 function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <div className="mx-auto max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white">
+    <div className="mx-auto max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-md">
       {faqs.map((f, i) => (
-        <div key={f.q}>
+        <div key={f.q} className={`transition-colors ${open === i ? "bg-mint/35" : "bg-white"}`}>
           <Button
             variant="ghost"
             type="button"
             onClick={() => setOpen(open === i ? null : i)}
-            className="flex h-auto w-full items-center justify-between gap-4 whitespace-normal rounded-none px-5 py-4 text-left"
+            className="flex h-auto w-full items-center justify-between gap-4 whitespace-normal rounded-none px-6 py-5 text-left hover:bg-transparent"
             aria-expanded={open === i}
           >
-            <span className="font-display text-base font-semibold text-foreground">{f.q}</span>
+            <span className="font-display text-base font-extrabold text-foreground sm:text-lg">{f.q}</span>
             <ChevronDown
-              size={20}
-              className={`shrink-0 text-brand transition-transform ${open === i ? "rotate-180" : ""}`}
+              size={22}
+              className={`shrink-0 text-brand transition-transform duration-200 ${open === i ? "rotate-180 text-brand-dark" : ""}`}
             />
           </Button>
           {open === i && (
-            <p className="px-5 pb-5 text-sm font-bold leading-relaxed text-brand-dark">{f.a}</p>
+            <div className="border-t border-brand/10 px-6 pb-5 pt-2">
+              <p className="text-sm font-semibold leading-relaxed text-brand-dark sm:text-base">{f.a}</p>
+            </div>
           )}
         </div>
       ))}
@@ -189,16 +214,16 @@ function Index() {
   return (
     <div className="font-sans text-foreground">
       {/* Letrero electrónico */}
-      <div className="sticky top-0 z-50 overflow-hidden bg-brand-dark py-2 text-[11px] font-semibold text-white sm:text-sm">
+      <div className="sticky top-0 z-50 overflow-hidden bg-brand-dark py-2 text-[11px] font-semibold text-white sm:text-sm shadow-md">
         <div className="marquee-track whitespace-nowrap">
           {[0, 1].map((k) => (
             <span key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
               {[
                 "✅ Estás en la página oficial de las 250 Recetas para Diabéticos",
                 "🚨 Oferta especial para América Latina: 78% de descuento solo por hoy",
-                "⚡ Acceso inmediato y de por vida",
+                "⚡ Acceso inmediato y de por vida en PDF",
               ].map((t) => (
-                <span key={t} className="px-6">
+                <span key={t} className="px-6 font-bold">
                   {t}
                 </span>
               ))}
@@ -211,26 +236,25 @@ function Index() {
       <header className="bg-white px-4 pb-14 pt-8">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
           <div className="text-center">
-            <span className="inline-block rounded-full bg-mint px-4 py-1.5 text-xs font-semibold text-brand-dark sm:text-sm">
-              ⭐ Aprobado para Diabéticos y Prediabéticos | Ingredientes 100% Accesibles
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-mint px-4 py-1.5 text-xs font-bold text-brand-dark sm:text-sm">
+              <Zap size={16} className="fill-brand text-brand" /> Aprobado para Diabéticos y Prediabéticos | Ingredientes Accesibles
             </span>
-            <h1 className="mt-5 font-display text-3xl font-extrabold leading-tight text-foreground sm:text-4xl lg:text-5xl">
-              Vuelve a Disfrutar de la Comida Sabrosa Sin Miedo a los Picos de Glucosa ni a las
-              Restricciones Extremas
+            <h1 className="mt-5 font-display text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl text-center">
+              Vuelve a Disfrutar de la Comida Sabrosa Sin Miedo a los Picos de Glucosa ni a las Restricciones Extremas
             </h1>
-            <h2 className="mt-4 text-base font-bold leading-relaxed text-brand-dark sm:text-lg">
+            <h2 className="mt-4 text-base font-bold leading-relaxed text-brand-dark sm:text-lg text-center max-w-2xl mx-auto">
               El recetario definitivo con 250 preparaciones económicas, deliciosas y de bajo índice
               glucémico para transformar tus comidas de todos los días — para ti o para quien más
               amas.
             </h2>
 
-            <ul className="mx-auto mt-6 max-w-xl space-y-3">
+            <ul className="mx-auto mt-6 max-w-xl space-y-3 text-left">
               {[
                 "250 opciones prácticas: desde desayunos con energía hasta postres cremosos sin azúcar refinada.",
                 "Ingredientes comunes del supermercado local (nada de ingredientes costosos o raros).",
                 "Diseñado para mantener tu glucosa estable y proteger tus arterias, nervios y riñones.",
               ].map((b) => (
-                <li key={b} className="flex justify-center gap-3 text-sm text-muted-foreground sm:text-base">
+                <li key={b} className="flex gap-3 text-sm font-semibold text-muted-foreground sm:text-base">
                   <Check className="mt-0.5 shrink-0 text-brand" size={20} />
                   <span>{b}</span>
                 </li>
@@ -238,34 +262,42 @@ function Index() {
             </ul>
 
             <div className="mx-auto mt-8 max-w-md">
-              <CtaButton>¡Sí, quiero las 250 recetas por solo $7.90!</CtaButton>
-              <p className="mt-3 text-center text-xs text-muted-foreground">
-                🔒 Pago seguro vía Hotmart • Descarga inmediata en PDF a tu celular o tablet •
-                Garantía de 7 días
+              <CtaButton subtitle="ACCESO INMEDIATO EN PDF">¡Sí, quiero las 250 recetas por solo $5.90!</CtaButton>
+              <p className="mt-3.5 text-center text-xs font-semibold text-muted-foreground">
+                🔒 Pago seguro vía Hotmart • Descarga inmediata en PDF • Garantía de 7 días
               </p>
             </div>
           </div>
 
           <div className="relative mx-auto w-full max-w-xl">
-            <div className="book-stage relative mx-auto min-h-[390px] w-full max-w-[470px] sm:min-h-[540px]" aria-label="Pack digital con los dos e-books incluidos">
+            <div className="book-stage relative mx-auto min-h-[410px] w-full max-w-[580px] sm:min-h-[500px]" aria-label="Pack digital con los dos e-books incluidos">
               <div className="book-glow absolute inset-x-[8%] bottom-[4%] h-[23%] rounded-full" aria-hidden="true" />
-              <img
-                src={bonusCoverAsset.url}
-                alt="Portada del e-book bonus Superando la Diabetes"
-                width={768}
-                height={1089}
-                className="bonus-book absolute right-[3%] top-[10%] w-[52%] rounded-md shadow-2xl"
-              />
-              <img
-                src={mainCoverAsset.url}
-                alt="Portada oficial del e-book 250 Recetas para Diabéticos"
-                width={768}
-                height={1088}
-                fetchPriority="high"
-                className="main-book absolute left-[5%] top-[2%] z-20 w-[60%] rounded-md shadow-2xl sm:left-[3%] sm:w-[62%]"
-              />
-              <div className="bonus-seal absolute bottom-[7%] right-[1%] z-30 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-cta px-2 text-center font-display text-base font-black uppercase leading-tight text-white shadow-xl sm:h-28 sm:w-28 sm:text-lg">
-                Gratis
+              <div className="bonus-book absolute left-[48%] top-[4%] z-10 w-[49%] cover-shine-wrapper rounded-lg cover-glow-bonus sm:left-[50%] sm:top-[3%] sm:w-[47%]">
+                <img
+                  src={BONUS_EBOOK_COVER}
+                  onError={(e) => { e.currentTarget.src = bonusCoverAsset.url; }}
+                  alt="Portada del e-book bonus Superando la Diabetes"
+                  width={768}
+                  height={1089}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <div className="main-book absolute left-[0%] top-[2%] z-30 w-[51%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[51%]">
+                <img
+                  src={MAIN_EBOOK_COVER}
+                  onError={(e) => { e.currentTarget.src = mainCoverAsset.url; }}
+                  alt="Portada oficial del e-book 250 Recetas para Diabéticos"
+                  width={768}
+                  height={1088}
+                  fetchPriority="high"
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <div className="bonus-seal absolute -bottom-3 right-[1%] z-40 grid h-24 w-24 place-items-center rounded-full border-4 border-white bg-emerald-500 p-1 text-center font-display uppercase leading-tight text-white shadow-xl shadow-emerald-500/40 sm:-bottom-4 sm:right-[2%] sm:h-28 sm:w-28">
+                <div className="flex flex-col items-center justify-center">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-100 sm:text-xs">BONUS</span>
+                  <span className="text-sm font-black uppercase tracking-wide text-white sm:text-base">GRATIS</span>
+                </div>
               </div>
             </div>
             <p className="mt-1 text-center text-sm font-bold text-brand-dark">
@@ -275,7 +307,7 @@ function Index() {
               {["Desayunos", "Platos Fuertes", "Postres Sin Azúcar"].map((t) => (
                 <span
                   key={t}
-                  className="rounded-full bg-mint px-3 py-1 text-xs font-semibold text-brand-dark"
+                  className="rounded-full bg-mint px-3 py-1 text-xs font-extrabold text-brand-dark"
                 >
                   {t}
                 </span>
@@ -288,7 +320,7 @@ function Index() {
       {/* Dolor */}
       <section className="bg-surface px-4 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center font-display text-2xl font-extrabold text-foreground sm:text-3xl">
+          <h2 className="text-center font-display text-2xl font-black text-foreground sm:text-3xl">
             ¿Sientes que Vivir con Diabetes Convirtió la Hora de Comer en un Castigo?
           </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -309,14 +341,14 @@ function Index() {
                 text: "El cansancio de los hijos o cónyuges buscando recetas en internet que prometen salud pero terminan siendo caras o difíciles de preparar.",
               },
             ].map((c) => (
-              <div key={c.title} className="rounded-2xl border border-border bg-white p-6">
-                <c.icon className="text-brand" size={32} />
+              <div key={c.title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
+                <c.icon className="text-brand" size={34} />
                 <h3 className="mt-4 font-display text-lg font-bold">{c.title}</h3>
                 <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-dark">{c.text}</p>
               </div>
             ))}
           </div>
-          <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-empathy p-6 text-center font-display text-base font-bold text-empathy-foreground sm:text-lg">
+          <p className="mx-auto mt-10 max-w-3xl rounded-2xl bg-empathy p-6 text-center font-display text-base font-bold text-empathy-foreground shadow-sm sm:text-lg">
             Tener diabetes no significa renunciar al placer de sentarse a la mesa. Solo necesitas el
             mapa de combinaciones e ingredientes de bajo impacto glucémico.
           </p>
@@ -326,14 +358,33 @@ function Index() {
       {/* Categorías */}
       <section className="bg-white px-4 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center font-display text-2xl font-extrabold sm:text-3xl">
+          <h2 className="text-center font-display text-2xl font-black sm:text-3xl">
             250 Opciones Nutritivas y Sabrosas para Cada Momento del Día
           </h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Primera tarjeta especial: Hábitos para Cuidar tu Diabetes */}
+            <div className="rounded-2xl border-2 border-brand/40 bg-gradient-to-br from-mint/90 via-emerald-50 to-white p-6 shadow-md transition-all hover:-translate-y-1 hover:shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand text-white shadow-md shadow-brand/20">
+                  <HeartPulse size={24} />
+                </div>
+                <div>
+                  <span className="inline-block rounded-full bg-brand/10 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-brand-dark">
+                    ⭐ Cuidado Diario
+                  </span>
+                  <h3 className="font-display text-lg font-black text-foreground">Hábitos para Cuidar tu Diabetes</h3>
+                </div>
+              </div>
+              <p className="mt-4 text-sm font-semibold leading-relaxed text-brand-dark">
+                Planifica tus comidas y registra tus dudas para revisarlas con tu médico o nutricionista.
+              </p>
+            </div>
+
+            {/* Categorías de recetas */}
             {categories.map((c) => (
               <div
                 key={c.title}
-                className="rounded-2xl border border-border bg-surface p-6 transition-shadow hover:shadow-lg"
+                className="rounded-2xl border border-border bg-surface p-6 transition-all hover:-translate-y-1 hover:shadow-md hover:border-brand/30"
               >
                 <div className="text-3xl">{c.emoji}</div>
                 <h3 className="mt-3 font-display text-lg font-bold">{c.title}</h3>
@@ -343,51 +394,69 @@ function Index() {
                 <p className="mt-3 text-sm font-semibold leading-relaxed text-brand-dark">{c.text}</p>
               </div>
             ))}
-            {[
-              { icon: HeartPulse, title: "Hábitos para Cuidar tu Diabetes", text: "Planifica tus comidas y registra tus dudas para revisarlas con tu médico o nutricionista." },
-              { icon: Users, title: "Bienestar para Toda la Familia", text: "Combina una alimentación variada con movimiento, descanso y el seguimiento de tu profesional de salud." },
-            ].map((item) => (
-              <div key={item.title} className="rounded-2xl border border-brand/30 bg-mint p-6">
-                <item.icon size={30} className="text-brand-dark" />
-                <h3 className="mt-3 font-display text-lg font-bold">{item.title}</h3>
-                <span className="mt-2 inline-block text-xs font-bold uppercase text-brand-dark">Cuidado diario</span>
-                <p className="mt-3 text-sm font-semibold leading-relaxed text-brand-dark">{item.text}</p>
+
+            {/* Última tarjeta especial: Bienestar para Toda la Familia */}
+            <div className="rounded-2xl border-2 border-brand/40 bg-gradient-to-br from-mint/90 via-emerald-50 to-white p-6 shadow-md transition-all hover:-translate-y-1 hover:shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand text-white shadow-md shadow-brand/20">
+                  <Users size={24} />
+                </div>
+                <div>
+                  <span className="inline-block rounded-full bg-brand/10 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-brand-dark">
+                    ⭐ Estilo de Vida
+                  </span>
+                  <h3 className="font-display text-lg font-black text-foreground">Bienestar para Toda la Familia</h3>
+                </div>
               </div>
-            ))}
+              <p className="mt-4 text-sm font-semibold leading-relaxed text-brand-dark">
+                Combina una alimentación variada con movimiento, descanso y el seguimiento de tu profesional de salud.
+              </p>
+            </div>
           </div>
-          <div className="mx-auto mt-10 max-w-md">
-            <CtaButton>Quiero mi recetario por $7.90</CtaButton>
+          <div className="mx-auto mt-12 max-w-md">
+            <CtaButton subtitle="DESCARGA INMEDIATA EN PDF">Quiero mi recetario por $5.90</CtaButton>
           </div>
         </div>
       </section>
 
       {/* Bonus */}
-      <section className="bg-brand-dark px-4 py-16 text-white">
+      <section className="bg-brand-dark px-4 py-16 text-white relative overflow-hidden">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2">
-          <img
-            src={bonusCoverAsset.url}
-            alt="Portada oficial del e-book bonus Superando la Diabetes"
-            loading="lazy"
-            width={768}
-            height={1089}
-            className="bonus-section-book mx-auto w-56 rounded-md drop-shadow-2xl sm:w-72"
-          />
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-cta px-4 py-1.5 text-xs font-bold uppercase sm:text-sm">
-              <Gift size={16} /> Regalo exclusivo hoy (valor: $19.00 USD — gratis con tu compra)
+          <div className="relative text-center">
+            <div className="cover-shine-wrapper cover-glow-bonus bonus-section-book mx-auto w-56 rounded-lg sm:w-72">
+              <img
+                src={BONUS_EBOOK_COVER}
+                onError={(e) => { e.currentTarget.src = bonusCoverAsset.url; }}
+                alt="Portada oficial del e-book bonus Superando la Diabetes"
+                loading="lazy"
+                width={768}
+                height={1089}
+                className="w-full h-auto rounded-lg border-2 border-emerald-400/30"
+              />
+            </div>
+            <span className="mt-5 inline-block rounded-full bg-mint px-4 py-1.5 text-xs font-black uppercase text-brand-dark shadow-md">
+              Bonus Exclusivo Incluido
             </span>
-            <h2 className="mt-5 font-display text-2xl font-extrabold sm:text-3xl">
+          </div>
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-cta px-4 py-2 text-xs font-black uppercase tracking-wide text-white shadow-md sm:text-sm">
+              <Gift size={18} /> Regalo Exclusivo Hoy (Valor: $19.00 USD — GRATIS HOY)
+            </span>
+            <h2 className="mt-5 font-display text-2xl font-black text-white sm:text-3xl leading-tight">
               E-book Superando la Diabetes: Guía de Acción Rápida
             </h2>
-            <ul className="mt-6 space-y-3">
+            <p className="mt-3 text-sm font-medium text-mint sm:text-base">
+              El complemento perfecto para maximizar tu salud y complementar el recetario principal.
+            </p>
+            <ul className="mt-6 space-y-3.5">
               {[
                 "Los 10 signos tempranos para evitar complicaciones irreversibles (neuropatía, daño renal y vascular).",
                 "El protocolo del sueño y control del estrés: cómo el cortisol sabotea tu insulina sin que te des cuenta.",
                 "Suplementos y minerales esenciales (Magnesio, Cromo, Omega-3 y Ácido Alfa-Lipoico).",
                 "Guía de apps gratuitas para registrar glucemia y carbohidratos en tu celular.",
               ].map((b) => (
-                <li key={b} className="flex gap-3 text-sm text-white/90 sm:text-base">
-                  <Check className="mt-0.5 shrink-0 text-mint" size={20} />
+                <li key={b} className="flex gap-3 text-sm font-medium text-white/95 sm:text-base">
+                  <Check className="mt-0.5 shrink-0 text-mint" size={22} />
                   <span>{b}</span>
                 </li>
               ))}
@@ -400,54 +469,56 @@ function Index() {
 
       {/* Precio */}
       <section id="comprar" className="scroll-mt-16 bg-white px-4 py-16">
-        <div className="mx-auto max-w-2xl rounded-3xl border-2 border-brand bg-white p-6 shadow-xl sm:p-10">
+        <div className="mx-auto max-w-2xl rounded-3xl border-2 border-brand/40 bg-white p-6 shadow-2xl sm:p-10">
           <div className="text-center">
-            <span className="inline-block rounded-full bg-brand px-4 py-1 text-xs font-bold uppercase text-white">
-              Más popular
+            <span className="inline-block rounded-full bg-brand px-5 py-1.5 text-xs font-black uppercase tracking-wider text-white shadow-sm">
+              🔥 Oferta Especial de Lanzamiento
             </span>
           </div>
-          <ul className="mt-8 space-y-3">
+          <ul className="mt-8 space-y-3.5">
             {[
               ["E-book 250 Recetas para Diabéticos", "$37.00"],
-              ["E-book Superando la Diabetes", "$19.00"],
+              ["E-book Superando la Diabetes (Bonus)", "$19.00"],
               ["Actualizaciones digitales de por vida", "Invaluable"],
             ].map(([label, value]) => (
               <li
                 key={label}
-                className="flex items-center justify-between gap-4 border-b border-border pb-3 text-sm sm:text-base"
+                className="flex items-center justify-between gap-4 border-b border-border pb-3.5 text-sm sm:text-base"
               >
-                <span className="flex min-w-0 items-center gap-2">
-                  <Check className="shrink-0 text-brand" size={18} />
-                  <span className="text-muted-foreground">{label}</span>
+                <span className="flex min-w-0 items-center gap-2 font-semibold">
+                  <Check className="shrink-0 text-brand stroke-[2.5]" size={20} />
+                  <span className="text-foreground">{label}</span>
                 </span>
-                <span className="shrink-0 font-semibold">{value}</span>
+                <span className="shrink-0 font-extrabold text-brand-dark">{value}</span>
               </li>
             ))}
           </ul>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-muted-foreground line-through">Precio Regular: $56.00 USD</p>
+            <p className="text-sm font-bold text-muted-foreground line-through">Precio Regular: $56.00 USD</p>
             <p className="mt-1 font-display text-4xl font-black text-brand sm:text-5xl">
-              HOY SOLO: $7.90 USD
+              HOY SOLO: $5.90 USD
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Pago único sin cargos sorpresa. Acceso digital inmediato.
+            <p className="mt-2 text-xs font-semibold text-muted-foreground sm:text-sm">
+              Pago único sin suscripciones ni cobros recurrentes. Acceso digital inmediato.
             </p>
           </div>
 
           <div className="mt-8">
-            <CtaButton href={CHECKOUT_URL}>Descargar todo el pack por solo $7.90 USD</CtaButton>
+            <CtaButton href={CHECKOUT_URL} subtitle="ACCESO INMEDIATO - GARANTÍA 7 DÍAS">
+              Descargar todo el pack por solo $5.90 USD
+            </CtaButton>
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs font-semibold text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <Lock size={14} className="text-brand" /> Encriptación SSL 256-bit
+              <Lock size={15} className="text-brand" /> Encriptación SSL 256-bit
             </span>
             <span className="flex items-center gap-1.5">
-              <BadgeCheck size={14} className="text-brand" /> Hotmart Verified
+              <BadgeCheck size={15} className="text-brand" /> Hotmart Verified
             </span>
             <span className="flex items-center gap-1.5">
-              <Download size={14} className="text-brand" /> Descarga inmediata en PDF
+              <Download size={15} className="text-brand" /> Descarga inmediata en PDF
             </span>
           </div>
         </div>
@@ -455,17 +526,23 @@ function Index() {
 
       {/* Garantía */}
       <section className="bg-surface px-4 py-16">
-        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-3xl border border-border bg-white p-8 text-center sm:flex-row sm:text-left">
-          <div className="guarantee-seal grid h-28 w-28 shrink-0 place-content-center rounded-full border-4 border-brand bg-mint text-center text-brand-dark" aria-label="Garantía de 7 días">
-            <span className="text-[10px] font-extrabold uppercase">Garantía</span>
-            <span className="font-display text-5xl font-black leading-none">7</span>
-            <span className="text-xs font-extrabold uppercase">Días</span>
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-3xl border-2 border-brand/20 bg-white p-8 text-center shadow-lg sm:flex-row sm:text-left">
+          <div className="guarantee-seal relative flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-mint text-center text-brand-dark shadow-md" aria-label="Garantía de 7 días">
+            <div className="guarantee-ring absolute -inset-1.5 rounded-full border-2 border-dashed border-brand pointer-events-none" />
+            <div className="relative z-10 flex flex-col items-center justify-center leading-none">
+              <span className="text-[10px] font-black uppercase tracking-wider text-brand-dark">Garantía</span>
+              <span className="font-display text-5xl font-black leading-none text-brand-dark my-0.5">7</span>
+              <span className="text-xs font-black uppercase tracking-wider text-brand-dark">Días</span>
+            </div>
           </div>
           <div>
-            <h2 className="font-display text-xl font-extrabold sm:text-2xl">
+            <div className="inline-flex items-center gap-1 rounded-full bg-mint px-3 py-1 text-xs font-extrabold text-brand-dark mb-2">
+              <ShieldCheck size={16} /> Compra 100% Libre de Riesgo
+            </div>
+            <h2 className="font-display text-xl font-black sm:text-2xl text-foreground">
               Garantía Incondicional de 7 Días
             </h2>
-            <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-dark">
+            <p className="mt-2 text-sm font-semibold leading-relaxed text-brand-dark sm:text-base">
               Prueba las recetas durante 7 días completos. Si sientes que no son fáciles, sabrosas y
               amigables con tu glucemia, pides el 100% de tu dinero de vuelta directamente en
               Hotmart. Sin preguntas ni trámites.
@@ -476,12 +553,12 @@ function Index() {
 
       {/* FAQ */}
       <section className="bg-white px-4 py-16 pb-32 md:pb-16">
-        <h2 className="mb-10 text-center font-display text-2xl font-extrabold sm:text-3xl">
+        <h2 className="mb-10 text-center font-display text-2xl font-black sm:text-3xl">
           Preguntas Frecuentes
         </h2>
         <Faq />
         <div className="mx-auto mt-10 max-w-md">
-          <CtaButton>Obtener el pack por $7.90</CtaButton>
+          <CtaButton subtitle="DESCARGA INMEDIATA EN PDF">Obtener el pack por $5.90</CtaButton>
         </div>
       </section>
 
@@ -489,19 +566,23 @@ function Index() {
         <p>
           Este material es informativo y no sustituye la orientación de tu médico o nutricionista.
         </p>
-        <p className="mt-2">© {new Date().getFullYear()} 250 Recetas para Diabéticos.</p>
+        <p className="mt-2 font-bold">© {new Date().getFullYear()} 250 Recetas para Diabéticos.</p>
       </footer>
 
       {/* Barra móvil */}
-      <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between gap-3 border-t border-border bg-white px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 flex items-center justify-between gap-3 border-t border-border bg-white/95 px-4 py-3 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.12)] md:hidden">
         <div className="min-w-0">
-          <p className="truncate text-xs font-semibold text-foreground">250 Recetas + Bonus</p>
-          <p className="text-sm font-black text-brand">$7.90 USD</p>
+          <p className="truncate text-xs font-bold text-foreground">250 Recetas + Bonus</p>
+          <p className="text-base font-black text-brand">$5.90 USD</p>
         </div>
-        <Button asChild variant="sales" className="sales-pulse h-auto shrink-0 rounded-xl px-5 py-3 text-sm uppercase">
-          <a href="#comprar">Obtener Ahora</a>
+        <Button asChild variant="sales" className="sales-pulse h-auto shrink-0 rounded-xl px-5 py-3.5 text-xs font-black uppercase">
+          <a href={CHECKOUT_URL} className="flex items-center gap-1.5">
+            <span>Obtener Ahora</span>
+            <ArrowRight size={16} className="stroke-[3]" />
+          </a>
         </Button>
       </div>
     </div>
   );
 }
+

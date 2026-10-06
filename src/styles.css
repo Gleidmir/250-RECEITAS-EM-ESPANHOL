@@ -165,24 +165,76 @@
   --cta-hover: oklch(0.55 0.18 42);
   --surface: oklch(0.98 0.004 250);
   --book-glow: oklch(0.42 0.11 152 / 0.22);
-  --sales: oklch(0.86 0.23 135);
-  --sales-hover: oklch(0.8 0.23 135);
-  --sales-foreground: oklch(0.2 0.05 152);
-  --sales-shadow: oklch(0.76 0.2 135 / 0.3);
+  --sales: oklch(0.82 0.22 135);
+  --sales-hover: oklch(0.86 0.23 135);
+  --sales-foreground: oklch(0.15 0.05 152);
+  --sales-dark: oklch(0.60 0.22 135);
+  --sales-shadow: oklch(0.72 0.20 135 / 0.4);
+  --sales-glow: oklch(0.82 0.22 135 / 0.55);
   --empathy: oklch(0.87 0.12 152);
   --empathy-foreground: oklch(0.12 0 0);
 }
 
-@keyframes sales-pulse {
-  0%, 100% { box-shadow: 0 4px 12px -4px var(--sales-shadow); }
-  50% { box-shadow: 0 6px 24px 2px var(--sales-shadow); }
+/* 3D Button style matching user high-converting references */
+.btn-sales-3d {
+  background: linear-gradient(180deg, oklch(0.86 0.22 135) 0%, oklch(0.78 0.22 135) 100%);
+  color: var(--sales-foreground);
+  box-shadow:
+    0 6px 0 0 var(--sales-dark),
+    0 12px 26px -4px var(--sales-glow);
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: none;
 }
 
-.sales-pulse { animation: sales-pulse 3.8s ease-in-out infinite; }
+.btn-sales-3d:hover {
+  background: linear-gradient(180deg, oklch(0.89 0.23 135) 0%, oklch(0.82 0.23 135) 100%);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 0 0 var(--sales-dark),
+    0 16px 36px -2px var(--sales-glow);
+}
+
+.btn-sales-3d:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 0 var(--sales-dark),
+    0 6px 16px -4px var(--sales-glow);
+}
+
+@keyframes sales-pulse {
+  0%, 100% {
+    box-shadow:
+      0 6px 0 0 var(--sales-dark),
+      0 10px 24px -4px var(--sales-glow);
+  }
+  50% {
+    box-shadow:
+      0 6px 0 0 var(--sales-dark),
+      0 14px 38px 2px var(--sales-glow);
+  }
+}
+
+.sales-pulse {
+  animation: sales-pulse 3s ease-in-out infinite;
+}
+
+@keyframes guarantee-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.guarantee-ring {
+  animation: guarantee-ring-spin 12s linear infinite;
+  will-change: transform;
+}
 
 .guarantee-seal {
-  outline: 2px dashed var(--brand);
-  outline-offset: 5px;
+  box-shadow: 0 10px 25px -5px oklch(0.42 0.11 152 / 0.2);
 }
 
 .reader-portrait {
@@ -193,6 +245,7 @@
   overflow: hidden;
   border-radius: 50%;
   border: 3px solid var(--mint);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 .reader-portrait img { position: absolute; width: 400%; height: auto; max-width: none; }
 .reader-portrait-0 img { left: 0; top: 0; }
@@ -226,25 +279,22 @@
 }
 
 @keyframes main-book-float {
-  0%, 100% { transform: perspective(1000px) rotateY(7deg) translateY(0); }
-  50% { transform: perspective(1000px) rotateY(3deg) translateY(-10px); }
+  0%, 100% { transform: perspective(1000px) translateZ(50px) rotateY(5deg) translateY(0); }
+  50% { transform: perspective(1000px) translateZ(50px) rotateY(2deg) translateY(-10px); }
 }
 
 @keyframes bonus-book-reveal {
   0%, 12% {
-    transform: perspective(1000px) translateX(-34%) scale(0.86) rotateY(-9deg);
+    transform: perspective(1000px) translateZ(-60px) translateX(-25%) scale(0.85) rotateY(-6deg);
     opacity: 1;
-    z-index: 10;
   }
   42%, 72% {
-    transform: perspective(1000px) translateX(0) translateY(-8px) scale(1.04) rotateY(-2deg);
+    transform: perspective(1000px) translateZ(-60px) translateX(0) translateY(-4px) scale(0.95) rotateY(-2deg);
     opacity: 1;
-    z-index: 25;
   }
   100% {
-    transform: perspective(1000px) translateX(0) scale(1) rotateY(-3deg);
+    transform: perspective(1000px) translateZ(-60px) translateX(0) scale(0.93) rotateY(-3deg);
     opacity: 1;
-    z-index: 25;
   }
 }
 
@@ -259,28 +309,99 @@
 }
 
 .book-stage {
-  perspective: 1000px;
+  perspective: 1200px;
   isolation: isolate;
+  transform-style: preserve-3d;
 }
 
 .book-glow {
-  background: var(--book-glow);
-  filter: blur(32px);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.45) 0%, rgba(5, 150, 105, 0.2) 60%, transparent 80%);
+  filter: blur(28px);
+}
+
+/* Premium Cover Glow & Shine */
+.cover-glow-main {
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.4),
+    0 0 30px 4px rgba(16, 185, 129, 0.35),
+    0 0 15px 1px rgba(255, 255, 255, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.cover-glow-main:hover {
+  box-shadow:
+    0 25px 50px -8px rgba(0, 0, 0, 0.5),
+    0 0 45px 8px rgba(16, 185, 129, 0.55),
+    0 0 25px 4px rgba(255, 255, 255, 0.4);
+}
+
+.cover-glow-bonus {
+  box-shadow:
+    0 20px 40px -10px rgba(0, 0, 0, 0.5),
+    0 0 35px 5px rgba(52, 211, 153, 0.4),
+    0 0 15px 2px rgba(255, 255, 255, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.cover-glow-bonus:hover {
+  box-shadow:
+    0 25px 55px -6px rgba(0, 0, 0, 0.6),
+    0 0 50px 10px rgba(52, 211, 153, 0.6),
+    0 0 25px 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Light sheen sheen overlay */
+.cover-shine-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.cover-shine-wrapper::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  animation: shine-sweep 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shine-sweep {
+  0%, 65% {
+    left: -70%;
+  }
+  100% {
+    left: 140%;
+  }
 }
 
 .main-book {
   animation: main-book-float 5.5s ease-in-out infinite;
   transform-origin: bottom center;
+  z-index: 30 !important;
+  position: absolute !important;
 }
 
 .bonus-book {
   animation: bonus-book-reveal 6.5s ease-in-out infinite alternate;
   transform-origin: bottom left;
+  z-index: 10 !important;
+  position: absolute !important;
 }
 
 .bonus-seal {
   animation: bonus-seal-pop 6.5s ease-in-out infinite alternate;
   z-index: 30;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.6), 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .bonus-section-book {
@@ -294,8 +415,9 @@
   .main-book,
   .bonus-book,
   .bonus-seal,
-  .bonus-section-book { animation: none; }
-  .bonus-book { z-index: 25; }
+  .bonus-section-book,
+  .guarantee-ring { animation: none; }
+  .bonus-book { z-index: 10 !important; }
 }
 
 html {
@@ -306,3 +428,4 @@ html {
 body {
   overflow-x: hidden;
 }
+
