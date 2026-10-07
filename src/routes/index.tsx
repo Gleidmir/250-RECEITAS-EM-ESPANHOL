@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ReaderCarousel } from "@/components/reader-carousel";
+import { UrgencyTimer } from "@/components/urgency-timer";
+import { SocialProofToast } from "@/components/social-proof-toast";
+import { BeforeAfterSection } from "@/components/before-after-section";
+import { RecipePreviewSection } from "@/components/recipe-preview-section";
 import {
   Lock,
   Download,
@@ -99,12 +103,12 @@ function CtaButton({
     <Button
       asChild
       variant="sales"
-      className={`sales-pulse h-auto min-h-16 w-full flex-col rounded-2xl px-6 py-4 text-center ${className}`}
+      className={`sales-pulse group h-auto min-h-16 w-full flex-col rounded-2xl px-6 py-4 text-center ${className}`}
     >
       <a href={href} className="flex flex-col items-center justify-center gap-0.5">
         <span className="flex items-center justify-center gap-2 text-base font-black uppercase tracking-wide sm:text-xl">
           <span>{children}</span>
-          <ArrowRight className="shrink-0 stroke-[3]" size={22} />
+          <ArrowRight className="shrink-0 stroke-[3] transition-transform duration-300 group-hover:translate-x-1.5 animate-arrow-nudge" size={22} />
         </span>
         {subtitle && (
           <span className="text-xs font-extrabold uppercase tracking-wider text-sales-foreground/80 sm:text-xs">
@@ -213,6 +217,9 @@ function Faq() {
 function Index() {
   return (
     <div className="font-sans text-foreground">
+      {/* Contador de Escasez y Urgencia */}
+      <UrgencyTimer />
+
       {/* Letrero electrónico */}
       <div className="sticky top-0 z-50 overflow-hidden bg-brand-dark py-2 text-[11px] font-semibold text-white sm:text-sm shadow-md">
         <div className="marquee-track whitespace-nowrap">
@@ -272,7 +279,7 @@ function Index() {
           <div className="relative mx-auto w-full max-w-xl">
             <div className="book-stage relative mx-auto aspect-[7/6] w-full max-w-[580px] sm:aspect-none sm:min-h-[460px]" aria-label="Pack digital con los dos e-books incluidos">
               <div className="book-glow absolute inset-x-[6%] bottom-[2%] h-[25%] rounded-full" aria-hidden="true" />
-              <div className="bonus-book absolute left-[44%] top-[3%] z-10 w-[53%] cover-shine-wrapper rounded-lg cover-glow-bonus sm:left-[48%] sm:top-[2%] sm:w-[48%]">
+              <div className="bonus-book absolute left-[46%] top-[3%] z-10 w-[51%] cover-shine-wrapper rounded-lg cover-glow-bonus sm:left-[49%] sm:top-[2%] sm:w-[48%]">
                 <img
                   src={BONUS_EBOOK_COVER}
                   onError={(e) => { e.currentTarget.src = bonusCoverAsset.url; }}
@@ -288,7 +295,7 @@ function Index() {
                   </div>
                 </div>
               </div>
-              <div className="main-book absolute left-[0%] top-[2%] z-30 w-[57%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[52%]">
+              <div className="main-book absolute left-[0%] top-[2%] z-30 w-[52%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[50%]">
                 <img
                   src={MAIN_EBOOK_COVER}
                   onError={(e) => { e.currentTarget.src = mainCoverAsset.url; }}
@@ -354,6 +361,12 @@ function Index() {
           </p>
         </div>
       </section>
+
+      {/* Transformación Antes vs Después */}
+      <BeforeAfterSection />
+
+      {/* Muestra Exclusiva de Recetas */}
+      <RecipePreviewSection />
 
       {/* Categorías */}
       <section className="bg-white px-4 py-16">
@@ -588,6 +601,9 @@ function Index() {
           ))}
         </div>
       </div>
+
+      {/* Social Proof Toast de Compras en Vivo */}
+      <SocialProofToast />
     </div>
   );
 }
