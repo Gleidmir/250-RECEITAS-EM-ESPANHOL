@@ -270,9 +270,9 @@ function Index() {
           </div>
 
           <div className="relative mx-auto w-full max-w-xl">
-            <div className="book-stage relative mx-auto min-h-[410px] w-full max-w-[580px] sm:min-h-[500px]" aria-label="Pack digital con los dos e-books incluidos">
-              <div className="book-glow absolute inset-x-[8%] bottom-[4%] h-[23%] rounded-full" aria-hidden="true" />
-              <div className="bonus-book absolute left-[48%] top-[4%] z-10 w-[49%] cover-shine-wrapper rounded-lg cover-glow-bonus sm:left-[50%] sm:top-[3%] sm:w-[47%]">
+            <div className="book-stage relative mx-auto aspect-[7/6] w-full max-w-[580px] sm:aspect-none sm:min-h-[460px]" aria-label="Pack digital con los dos e-books incluidos">
+              <div className="book-glow absolute inset-x-[6%] bottom-[2%] h-[25%] rounded-full" aria-hidden="true" />
+              <div className="bonus-book absolute left-[44%] top-[3%] z-10 w-[53%] cover-shine-wrapper rounded-lg cover-glow-bonus sm:left-[48%] sm:top-[2%] sm:w-[48%]">
                 <img
                   src={BONUS_EBOOK_COVER}
                   onError={(e) => { e.currentTarget.src = bonusCoverAsset.url; }}
@@ -281,14 +281,14 @@ function Index() {
                   height={1089}
                   className="w-full h-auto rounded-lg"
                 />
-                <div className="bonus-seal absolute -bottom-4 -right-3 z-40 grid h-20 w-20 place-items-center rounded-full border-4 border-white bg-emerald-500 p-1 text-center font-display uppercase leading-tight text-white shadow-xl shadow-emerald-500/40 sm:-bottom-5 sm:-right-4 sm:h-24 sm:w-24">
+                <div className="bonus-seal absolute -bottom-3 -right-2 z-40 grid h-16 w-16 place-items-center rounded-full border-2 border-white bg-emerald-500 p-0.5 text-center font-display uppercase leading-tight text-white shadow-xl shadow-emerald-500/40 min-[380px]:h-20 min-[380px]:w-20 sm:-bottom-5 sm:-right-4 sm:h-24 sm:w-24 sm:border-4">
                   <div className="flex flex-col items-center justify-center">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-100 sm:text-xs">BONUS</span>
-                    <span className="text-xs font-black uppercase tracking-wide text-white sm:text-sm">GRATIS</span>
+                    <span className="text-[9px] font-black uppercase tracking-wider text-emerald-100 min-[380px]:text-[10px] sm:text-xs">BONUS</span>
+                    <span className="text-[11px] font-black uppercase tracking-wide text-white min-[380px]:text-xs sm:text-sm">GRATIS</span>
                   </div>
                 </div>
               </div>
-              <div className="main-book absolute left-[0%] top-[2%] z-30 w-[51%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[51%]">
+              <div className="main-book absolute left-[0%] top-[2%] z-30 w-[57%] cover-shine-wrapper rounded-lg cover-glow-main sm:left-[0%] sm:w-[52%]">
                 <img
                   src={MAIN_EBOOK_COVER}
                   onError={(e) => { e.currentTarget.src = mainCoverAsset.url; }}
@@ -300,10 +300,10 @@ function Index() {
                 />
               </div>
             </div>
-            <p className="mt-1 text-center text-sm font-bold text-brand-dark">
+            <p className="mt-2 text-center text-sm font-bold text-brand-dark sm:mt-1">
               Pack digital completo: recetario principal + guía bonus
             </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <div className="mt-3 flex flex-wrap justify-center gap-2 sm:mt-4">
               {["Desayunos", "Platos Fuertes", "Postres Sin Azúcar"].map((t) => (
                 <span
                   key={t}
