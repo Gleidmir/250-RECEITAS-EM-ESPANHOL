@@ -99,13 +99,23 @@ function CtaButton({
   className?: string;
   href?: string;
 }) {
+  const handleClick = () => {
+    if (typeof window !== "undefined" && (window as unknown as { fbq?: Function }).fbq) {
+      (window as unknown as { fbq: Function }).fbq("track", "InitiateCheckout", {
+        content_name: "250 Recetas para Diabéticos + Bonus",
+        value: 5.90,
+        currency: "USD",
+      });
+    }
+  };
+
   return (
     <Button
       asChild
       variant="sales"
       className={`sales-pulse group h-auto min-h-16 w-full flex-col rounded-2xl px-6 py-4 text-center ${className}`}
     >
-      <a href={href} className="flex flex-col items-center justify-center gap-0.5">
+      <a href={href} onClick={handleClick} className="flex flex-col items-center justify-center gap-0.5">
         <span className="flex items-center justify-center gap-2 text-base font-black uppercase tracking-wide sm:text-xl">
           <span>{children}</span>
           <ArrowRight className="shrink-0 stroke-[3] transition-transform duration-300 group-hover:translate-x-1.5 animate-arrow-nudge" size={22} />
